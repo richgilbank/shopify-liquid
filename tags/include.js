@@ -16,7 +16,7 @@ module.exports = function(liquid) {
             }
         },
         render: function(scope, hash) {
-            var filepath = Liquid.evalValue(this.value, scope);
+            var filepath = 'snippets/' + Liquid.evalValue(this.value, scope);
             if(this.with){
                 hash[filepath] = Liquid.evalValue(this.with, scope);
             }

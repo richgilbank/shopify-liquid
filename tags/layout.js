@@ -13,7 +13,7 @@ module.exports = function(liquid) {
             this.tpls = liquid.parser.parse(remainTokens);
         },
         render: function(scope, hash) {
-            var layout = Liquid.evalValue(this.layout, scope);
+            var layout = 'layout/' + Liquid.evalValue(this.layout, scope);
 
             var html = '';
             scope.push({});
@@ -24,6 +24,12 @@ module.exports = function(liquid) {
                     return liquid.handleCache(layout);
                 })
                 .then((templates) => {
+                    for(var i in templates) {
+                        if(templates[i].initial === 'content_for_layout') {
+                            templates[i].type = 'html';
+                            templates[i].value = html;
+                        }
+                    }
                     return liquid.renderer.renderTemplates(templates, scope);
                 })
                 .then((partial) => {

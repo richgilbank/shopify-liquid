@@ -4,6 +4,7 @@ const strftime = require('./src/strftime.js');
 module.exports = function(liquid) {
     liquid.registerFilter('abs', v => Math.abs(v));
     liquid.registerFilter('append', (v, arg) => v + arg);
+    liquid.registerFilter('asset_url', v => `assets/${v}`);
     liquid.registerFilter('capitalize', str =>
         (str || '').charAt(0).toUpperCase() + str.slice(1));
     liquid.registerFilter('ceil', v => Math.ceil(v));
@@ -70,6 +71,7 @@ module.exports = function(liquid) {
     liquid.registerFilter('strip', (v) => (v || '').trim());
     liquid.registerFilter('strip_html', v => (v || '').replace(/<\/?\s*\w+\s*\/?>/g, ''));
     liquid.registerFilter('strip_newlines', v => (v || '').replace(/\n/g, ''));
+    liquid.registerFilter('stylesheet_tag', v => `<link rel="stylesheet" type="text/css" href="${v}" />`)
     liquid.registerFilter('times', (v, arg) => v * arg);
     liquid.registerFilter('truncate', (v, l, o) => {
         v = v || '';
