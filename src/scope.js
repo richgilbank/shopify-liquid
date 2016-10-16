@@ -68,7 +68,10 @@ function getPropertyByPath(obj, path) {
         var resolveRE = new RegExp(`\\[(\\d+|${lexical.identifier.source}(?:\\.${lexical.identifier.source})*)\\]`);
         var pathWithResolvedBrackets = path.replace(resolveRE, resolveHashKeys.bind(obj));
         var paths = pathWithResolvedBrackets.split('.');
-        paths.forEach(p => obj = obj && obj[p]);
+        paths.forEach(p => {
+          if(p === 'size') p = 'length';
+          return obj = obj && obj[p];
+        });
         return obj;
     }
     return obj[path];
