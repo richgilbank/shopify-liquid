@@ -24,12 +24,7 @@ module.exports = function(liquid) {
                     return liquid.handleCache(layout);
                 })
                 .then((templates) => {
-                    for(var i in templates) {
-                        if(templates[i].initial === 'content_for_layout') {
-                            templates[i].type = 'html';
-                            templates[i].value = html;
-                        }
-                    }
+                    scope.set('content_for_layout', html);
                     return liquid.renderer.renderTemplates(templates, scope);
                 })
                 .then((partial) => {
